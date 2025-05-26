@@ -1,0 +1,132 @@
+<!-- html 코드로 검은 테두리의 정사각형을 3*3으로 분할한 모양을 만들고, 색상 9개를 입력하여 각 칸에 채운 뒤 복사하면 정사각형 이미지를 복사할 수 있게 해줘 -->
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <title>색상 채우기 및 복사 예제</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 30px;
+            }
+            canvas {
+                border: 0px solid black;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+            }
+            .color-inputs {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+                margin-bottom: 10px;
+            }
+            .color-inputs input[type="color"] {
+                width: 50px;
+                height: 30px;
+                padding: 0;
+                border: none;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="colorCanvas" width="300" height="300"></canvas>
+        <div class="color-inputs">
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#FFFF05" />
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#D8D4D3" />
+            <input type="color" value="#D8D4D3" />
+        </div>
+        <button id="fillAndCopyBtn">색상 채우고 복사</button>
+
+        <script>
+            /*
+              red     : #E30929
+              orange  : #EF7D05
+              yellow  : #FFFF05
+              white   : #FFFFFF
+              green   : #07A23A
+              blue    : #0354A1
+              gray    : #958B87
+              light   : #D8D4D3
+              black   : #000000
+            */
+            const canvas = document.getElementById("colorCanvas");
+            const ctx = canvas.getContext("2d", { alpha: true });
+            const colorInputs = document.querySelectorAll('.color-inputs input[type="color"]');
+            const fillAndCopyBtn = document.getElementById("fillAndCopyBtn");
+
+            const gridSize = 3;
+            const cellSize = 75;
+            const wpadSize = (canvas.width - gridSize * cellSize) / 2;
+            const hpadSize = (canvas.width - gridSize * cellSize) / 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            function drawGrid() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        const index = i * gridSize + j;
+                        ctx.fillStyle = colorInputs[index].value;
+                        ctx.roundRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize, 10);
+                        ctx.fill();
+                    }
+                }
+                ctx.lineJoin = "round";
+                ctx.lineCap = "round";
+                ctx.lineWidth = 10;
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        ctx.strokeRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+
+            drawGrid();
+
+            // 색상 입력 변경 시 다시 그리기
+            colorInputs.forEach((input) => {
+                input.addEventListener("input", drawGrid);
+            });
+
+            // 캔버스를 클립보드에 복사
+            // 알파채널을 포함해서 복사되게 하기
+
+            async function copyCanvasToClipboard() {
+                try {
+                    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+                    const item = new ClipboardItem({ "image/png": blob });
+                    await navigator.clipboard.write([item]);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
+            // 버튼 클릭 시 색상 채우고 복사
+            fillAndCopyBtn.addEventListener("click", () => {
+                drawGrid(); // 버튼 클릭 시에도 최신 색상으로 다시 그리기
+                copyCanvasToClipboard();
+            });
+
+            // Ctrl+C 눌렀을 때 복사
+            document.addEventListener("keydown", (e) => {
+                if (e.ctrlKey && e.key === "c") {
+                    copyCanvasToClipboard();
+                    e.preventDefault(); // 기본 복사 동작 방지
+                }
+            });
+        </script>
+    </body>
+</html>
