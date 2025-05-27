@@ -17,54 +17,95 @@
                 box-sizing: border-box;
                 margin-bottom: 10px;
             }
-            .color-inputs {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px;
-                margin-bottom: 10px;
+            button.color-input {
+                border: 10px solid black;
+                border-radius: 10px;
+                width: 75px;
+                height: 75px;
+                margin: 5px;
+                font-size: 20px;
+                color: black;
+                text-shadow:
+                    -1px -1px 0 white,
+                    1px -1px 0 white,
+                    -1px 1px 0 white,
+                    1px 1px 0 white;
+                margin: 0;
             }
-            .color-inputs input[type="color"] {
-                width: 50px;
-                height: 30px;
-                padding: 0;
-                border: none;
+            button.reset-input {
+                border: 10px solid black;
+                border-radius: 10px;
+                width: 75px;
+                height: 75px;
+                margin: 5px;
+                font-size: 15px;
+                text-align: center;
+                background-color: #d8d4d3;
+                color: black;
+                margin: 0;
             }
-            button {
-                padding: 10px 20px;
-                font-size: 16px;
+            button.clear-input {
+                border: 10px solid black;
+                border-radius: 10px;
+                width: 75px;
+                height: 75px;
+                margin: 5px;
+                font-size: 15px;
+                text-align: center;
+                background-color: #d8d4d3;
+                color: black;
+                margin: 0;
             }
         </style>
     </head>
     <body>
         <canvas id="colorCanvas" width="300" height="300"></canvas>
-        <div class="color-inputs">
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#FFFF05" />
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#D8D4D3" />
-            <input type="color" value="#D8D4D3" />
-        </div>
-        <button id="fillAndCopyBtn">색상 채우고 복사</button>
+        <table>
+            <tr>
+                <td><button class="color-input" value="R" style="background-color: #e30929">R</button></td>
+                <td><button class="color-input" value="Y" style="background-color: #ffff05">Y</button></td>
+                <td><button class="color-input" value="G" style="background-color: #07a23a">G</button></td>
+            </tr>
+            <tr>
+                <td><button class="color-input" value="O" style="background-color: #ef7d05">O</button></td>
+                <td><button class="color-input" value="W" style="background-color: #ffffff">W</button></td>
+                <td><button class="color-input" value="B" style="background-color: #0354a1">B</button></td>
+            </tr>
+            <tr>
+                <td><button class="color-input" value="X" style="background-color: #958b87">X</button></td>
+                <td><button class="color-input" value="L" style="background-color: #d8d4d3">L</button></td>
+                <td><button class="color-input" value="K" style="background-color: #000000">K</button></td>
+            </tr>
+            <tr>
+                <td><button class="reset-input" id="resetBtn">RESET</button></td>
+                <td><button class="clear-input" id="clearBtn">CLEAR</button></td>
+            </tr>
+        </table>
 
+        <input type="text" id="color-input" value="" maxlength="9" pattern="[ROYWGBXLK]{0,9}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" />
+        <!-- <input type="text" id="addit-input" value="" maxlength="4" pattern="[0-7]{0,4}" /> -->
+        <!-- <input type="text" id="aclor-input" value="" maxlength="12" pattern="[ROYWGBXLK]{0,12}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" /> -->
+        <div><br /></div>
+        <button id="fillAndCopyBtn">복사</button>
         <script>
-            /*
-              red     : #E30929
-              orange  : #EF7D05
-              yellow  : #FFFF05
-              white   : #FFFFFF
-              green   : #07A23A
-              blue    : #0354A1
-              gray    : #958B87
-              light   : #D8D4D3
-              black   : #000000
-            */
+            const colorTable = {
+                R: "#E30929",
+                O: "#EF7D05",
+                Y: "#FFFF05",
+                W: "#FFFFFF",
+                G: "#07A23A",
+                B: "#0354A1",
+                X: "#958B87",
+                L: "#D8D4D3",
+                K: "#000000",
+            };
             const canvas = document.getElementById("colorCanvas");
             const ctx = canvas.getContext("2d", { alpha: true });
-            const colorInputs = document.querySelectorAll('.color-inputs input[type="color"]');
+
+            const colorInput = document.getElementById("color-input");
+            const additInput = document.getElementById("addit-input");
+            const aClorInput = document.getElementById("aclor-input");
+
             const fillAndCopyBtn = document.getElementById("fillAndCopyBtn");
 
             const gridSize = 3;
@@ -73,15 +114,22 @@
             const hpadSize = (canvas.width - gridSize * cellSize) / 2;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 50)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             function drawGrid() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 for (let i = 0; i < gridSize; i++) {
                     for (let j = 0; j < gridSize; j++) {
                         const index = i * gridSize + j;
-                        ctx.fillStyle = colorInputs[index].value;
+                        ctx.beginPath();
+                        ctx.fillStyle = colorTable[colorInput.value.charAt(index).toUpperCase()] ?? colorTable["X"];
+                        console.log(ctx.fillStyle);
                         ctx.roundRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize, 10);
                         ctx.fill();
+                        ctx.closePath();
+
+                        console.log(colorInput.value.charAt(index));
                     }
                 }
                 ctx.lineJoin = "round";
@@ -92,17 +140,21 @@
                         ctx.strokeRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize);
                     }
                 }
+                // for (let i = 0; i < 4; i++) {
+                //     additInput.value
+                //         .charAt(i)
+                //         .toString(2)
+                //         .padStart(3, "0")
+                //         .map((bit) => bit === "1");
+                //     [-0, 0, 0, cellSize / 2];
+                //     [-cellSize / 2, 0, 0, cellSize];
+                //     ctx.strokeRect(wpadSize + j * cellSize - cellSize / 2, hpadSize + i * cellSize, cellSize, cellSize);
+                // }
             }
 
             drawGrid();
-            //
-            // 색상 입력 변경 시 다시 그리기
-            colorInputs.forEach((input) => {
-                input.addEventListener("input", drawGrid);
-            });
 
-            // 캔버스를 클립보드에 복사
-            // 알파채널을 포함해서 복사되게 하기
+            colorInput.addEventListener("input", drawGrid);
 
             async function copyCanvasToClipboard() {
                 try {
@@ -114,18 +166,40 @@
                 }
             }
 
-            // 버튼 클릭 시 색상 채우고 복사
             fillAndCopyBtn.addEventListener("click", () => {
-                drawGrid(); // 버튼 클릭 시에도 최신 색상으로 다시 그리기
+                drawGrid();
                 copyCanvasToClipboard();
             });
 
-            // Ctrl+C 눌렀을 때 복사
             document.addEventListener("keydown", (e) => {
                 if (e.ctrlKey && e.key === "c") {
                     copyCanvasToClipboard();
-                    e.preventDefault(); // 기본 복사 동작 방지
+                    e.preventDefault();
                 }
+            });
+
+            //각 버튼을 누르면 버튼의 값이 텍스트인풋에 들어감, 리셋 누르면 텍스트 인풋 초기화, 지우기 누르면 하나 지워짐            const colorButtons = document.querySelectorAll(".color-input");
+            const resetBtn = document.getElementById("resetBtn");
+            const clearBtn = document.getElementById("clearBtn");
+            const colorButtons = document.querySelectorAll(".color-input");
+
+            colorButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (colorInput.value.length < 9) {
+                        colorInput.value += button.value;
+                        drawGrid();
+                    }
+                });
+            });
+
+            resetBtn.addEventListener("click", () => {
+                colorInput.value = "";
+                drawGrid();
+            });
+
+            clearBtn.addEventListener("click", () => {
+                colorInput.value = colorInput.value.slice(0, -1);
+                drawGrid();
             });
         </script>
     </body>
