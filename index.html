@@ -1,9 +1,8 @@
-<!-- html 코드로 검은 테두리의 정사각형을 3*3으로 분할한 모양을 만들고, 색상 9개를 입력하여 각 칸에 채운 뒤 복사하면 정사각형 이미지를 복사할 수 있게 해줘 -->
 <!doctype html>
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
-        <title>색상 채우기 및 복사 예제</title>
+        <title>RUVIKZ</title>
         <style>
             body {
                 font-family: sans-serif;
@@ -56,10 +55,22 @@
                 color: black;
                 margin: 0;
             }
+            button.toggle-input {
+                border: 10px solid black;
+                border-radius: 10px;
+                width: 75px;
+                height: 75px;
+                margin: 5px;
+                font-size: 15px;
+                text-align: center;
+                background-color: #d8d4d3;
+                color: black;
+                margin: 0;
+            }
         </style>
     </head>
     <body>
-        <canvas id="colorCanvas" width="300" height="300"></canvas>
+        <canvas id="colorCanvas" width="400" height="400"></canvas>
         <table>
             <tr>
                 <td><button class="color-input" value="R" style="background-color: #e30929">R</button></td>
@@ -78,15 +89,16 @@
             </tr>
             <tr>
                 <td><button class="reset-input" id="resetBtn">RESET</button></td>
-                <td><button class="clear-input" id="clearBtn">CLEAR</button></td>
+                <td><button class="clear-input" id="clearBtn">DEL</button></td>
+                <td><button class="toggle-input" id="toggleBtn">plus</button></td>
             </tr>
         </table>
 
-        <input type="text" id="color-input" value="" maxlength="9" pattern="[ROYWGBXLK]{0,9}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" />
+        <input type="text" id="color-input" value="" maxlength="21" pattern="[ROYWGBXLK]{0,21}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" />
         <!-- <input type="text" id="addit-input" value="" maxlength="4" pattern="[0-7]{0,4}" /> -->
         <!-- <input type="text" id="aclor-input" value="" maxlength="12" pattern="[ROYWGBXLK]{0,12}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" /> -->
         <div><br /></div>
-        <button id="fillAndCopyBtn">복사</button>
+        <button id="copy">복사</button>
         <script>
             const colorTable = {
                 R: "#E30929",
@@ -106,12 +118,14 @@
             const additInput = document.getElementById("addit-input");
             const aClorInput = document.getElementById("aclor-input");
 
-            const fillAndCopyBtn = document.getElementById("fillAndCopyBtn");
+            const copyBtn = document.getElementById("copy");
 
             const gridSize = 3;
             const cellSize = 75;
             const wpadSize = (canvas.width - gridSize * cellSize) / 2;
             const hpadSize = (canvas.width - gridSize * cellSize) / 2;
+
+            let toggle = false;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "rgba(255, 255, 255, 50)";
@@ -124,12 +138,43 @@
                         const index = i * gridSize + j;
                         ctx.beginPath();
                         ctx.fillStyle = colorTable[colorInput.value.charAt(index).toUpperCase()] ?? colorTable["X"];
-                        console.log(ctx.fillStyle);
                         ctx.roundRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize, 10);
                         ctx.fill();
                         ctx.closePath();
-
-                        console.log(colorInput.value.charAt(index));
+                    }
+                }
+                if (toggle) {
+                    for (let i = 0; i < gridSize; i++) {
+                        const index = i + 9;
+                        ctx.beginPath();
+                        ctx.fillStyle = colorTable[colorInput.value.charAt(index).toUpperCase()] ?? colorTable["X"];
+                        ctx.roundRect(wpadSize + i * cellSize, hpadSize - cellSize / 2, cellSize, cellSize / 2);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                    for (let i = 0; i < gridSize; i++) {
+                        const index = i + 9 + 3;
+                        ctx.beginPath();
+                        ctx.fillStyle = colorTable[colorInput.value.charAt(index).toUpperCase()] ?? colorTable["X"];
+                        ctx.roundRect(wpadSize + cellSize * gridSize, hpadSize + i * cellSize, cellSize / 2, cellSize);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                    for (let i = 0; i < gridSize; i++) {
+                        const index = i + 9 + 6;
+                        ctx.beginPath();
+                        ctx.fillStyle = colorTable[colorInput.value.charAt(index).toUpperCase()] ?? colorTable["X"];
+                        ctx.roundRect(wpadSize + (gridSize - i - 1) * cellSize, hpadSize + cellSize * gridSize, cellSize, cellSize / 2);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                    for (let i = 0; i < gridSize; i++) {
+                        const index = i + 9 + 9;
+                        ctx.beginPath();
+                        ctx.fillStyle = colorTable[colorInput.value.charAt(index).toUpperCase()] ?? colorTable["X"];
+                        ctx.roundRect(wpadSize - cellSize / 2, hpadSize + (gridSize - i - 1) * cellSize, cellSize / 2, cellSize);
+                        ctx.fill();
+                        ctx.closePath();
                     }
                 }
                 ctx.lineJoin = "round";
@@ -140,6 +185,15 @@
                         ctx.strokeRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize);
                     }
                 }
+                if (toggle) {
+                    for (let i = 0; i < gridSize; i++) {
+                        ctx.strokeRect(wpadSize - cellSize / 2, hpadSize + i * cellSize, cellSize / 2, cellSize);
+                        ctx.strokeRect(wpadSize + cellSize * gridSize, hpadSize + i * cellSize, cellSize / 2, cellSize);
+                        ctx.strokeRect(wpadSize + i * cellSize, hpadSize - cellSize / 2, cellSize, cellSize / 2);
+                        ctx.strokeRect(wpadSize + i * cellSize, hpadSize + cellSize * gridSize, cellSize, cellSize / 2);
+                    }
+                }
+
                 // for (let i = 0; i < 4; i++) {
                 //     additInput.value
                 //         .charAt(i)
@@ -166,7 +220,7 @@
                 }
             }
 
-            fillAndCopyBtn.addEventListener("click", () => {
+            copyBtn.addEventListener("click", () => {
                 drawGrid();
                 copyCanvasToClipboard();
             });
@@ -178,14 +232,15 @@
                 }
             });
 
-            //각 버튼을 누르면 버튼의 값이 텍스트인풋에 들어감, 리셋 누르면 텍스트 인풋 초기화, 지우기 누르면 하나 지워짐            const colorButtons = document.querySelectorAll(".color-input");
             const resetBtn = document.getElementById("resetBtn");
             const clearBtn = document.getElementById("clearBtn");
+            const toggleBtn = document.getElementById("toggleBtn");
+
             const colorButtons = document.querySelectorAll(".color-input");
 
             colorButtons.forEach((button) => {
                 button.addEventListener("click", () => {
-                    if (colorInput.value.length < 9) {
+                    if (colorInput.value.length < 21) {
                         colorInput.value += button.value;
                         drawGrid();
                     }
@@ -194,11 +249,17 @@
 
             resetBtn.addEventListener("click", () => {
                 colorInput.value = "";
+                toggle = false;
+
                 drawGrid();
             });
 
             clearBtn.addEventListener("click", () => {
                 colorInput.value = colorInput.value.slice(0, -1);
+                drawGrid();
+            });
+            toggleBtn.addEventListener("click", () => {
+                toggle = !toggle;
                 drawGrid();
             });
         </script>
