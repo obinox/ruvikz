@@ -270,13 +270,14 @@
                 const link = document.createElement("a");
                 link.download = colorInput.value.slice(0, toggle ? 21 : 9).padEnd(toggle ? 21 : 9, "X") + "-ruvikz.png";
                 link.href = canvas.toDataURL("image/png");
-                if (navigator.userAgent.includes("iPad") || navigator.userAgent.includes("iPhone")) {
-                    link.click();
-                    const image = canvas.toDataURL("image/png");
-                    window.open(image, "_blank");
-                } else {
-                    link.click();
-                }
+                // if (navigator.userAgent.includes("iPad") || navigator.userAgent.includes("iPhone")) {
+                //     link.click();
+                //     const image = canvas.toDataURL("image/png");
+                //     window.open(image, "_blank");
+                // } else {
+                //     link.click();
+                // }
+                link.click();
             });
         </script>
     </body>
