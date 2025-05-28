@@ -116,7 +116,6 @@
             };
             const canvas = document.getElementById("colorCanvas");
             const ctx = canvas.getContext("2d", { alpha: true });
-            const image = canvas.toDataURL("image/png");
 
             const colorInput = document.getElementById("color-input");
             const additInput = document.getElementById("addit-input");
@@ -273,7 +272,8 @@
                 link.href = canvas.toDataURL("image/png");
                 if (navigator.userAgent.includes("iPad") || navigator.userAgent.includes("iPhone")) {
                     link.click();
-                    // window.open(image, "_blank");
+                    const image = canvas.toDataURL("image/png");
+                    window.open(image, "_blank");
                 } else {
                     link.click();
                 }
