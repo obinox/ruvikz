@@ -116,6 +116,7 @@
             };
             const canvas = document.getElementById("colorCanvas");
             const ctx = canvas.getContext("2d", { alpha: true });
+            const image = canvas.toDataURL("image/png");
 
             const colorInput = document.getElementById("color-input");
             const additInput = document.getElementById("addit-input");
@@ -270,7 +271,6 @@
                 const link = document.createElement("a");
                 link.download = colorInput.value.slice(0, toggle ? 21 : 9).padEnt(toggle ? 21 : 9, "X") + "-ruvikz.png";
                 link.href = canvas.toDataURL("image/png");
-                link.click();
                 if (navigator.userAgent.includes("iPad") || navigator.userAgent.includes("iPhone")) {
                     window.open(image, "_blank");
                 } else {
