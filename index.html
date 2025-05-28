@@ -101,7 +101,7 @@
         <!-- <input type="text" id="aclor-input" value="" maxlength="12" pattern="[ROYWGBXLK]{0,12}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" /> -->
         <div><br /></div>
         <button id="copy">복사</button>
-        <button id="downloadBtn">이미지 다운로드</button>
+        <button id="downloadBtn">다운로드</button>
         <script>
             const colorTable = {
                 R: "#E30929",
@@ -269,7 +269,7 @@
 
             document.getElementById("downloadBtn").addEventListener("click", () => {
                 const link = document.createElement("a");
-                link.download = colorInput.value.slice(0, toggle ? 21 : 9).padEnt(toggle ? 21 : 9, "X") + "-ruvikz.png";
+                link.download = colorInput.value.slice(0, toggle ? 21 : 9).padEnd(toggle ? 21 : 9, "X") + "-ruvikz.png";
                 link.href = canvas.toDataURL("image/png");
                 if (navigator.userAgent.includes("iPad") || navigator.userAgent.includes("iPhone")) {
                     window.open(image, "_blank");
