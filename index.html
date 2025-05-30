@@ -296,7 +296,7 @@
 
             document.getElementById("downloadBtn").addEventListener("click", () => {
                 const link = document.createElement("a");
-                link.download = colorInput.value.slice(0, toggle ? 21 : 9).padEnd(toggle ? 21 : 9, "X") + "-ruvikz.png";
+                link.download = colorInput.value.slice(0, toggle ? 21 : 9).padEnd(toggle ? 21 : 9, "X") + "e" + edge Input.value + "c" + cornerInput.value + "-ruvikz.png";
                 link.href = canvas.toDataURL("image/png");
                 // if (navigator.userAgent.includes("iPad") || navigator.userAgent.includes("iPhone")) {
                 //     link.click();
