@@ -17,55 +17,19 @@
                 box-sizing: border-box;
                 margin-bottom: 10px;
             }
-            button.color-input {
+            button.inputBtn {
                 border: 10px solid black;
                 border-radius: 10px;
-                width: 75px;
-                height: 75px;
+                width: 40px;
+                height: 40px;
                 margin: 5px;
-                font-size: 20px;
+                font-size: 10px;
                 color: black;
                 text-shadow:
                     -1px -1px 0 white,
                     1px -1px 0 white,
                     -1px 1px 0 white,
                     1px 1px 0 white;
-                margin: 0;
-            }
-            button.reset-input {
-                border: 10px solid black;
-                border-radius: 10px;
-                width: 75px;
-                height: 75px;
-                margin: 5px;
-                font-size: 15px;
-                text-align: center;
-                background-color: #d8d4d3;
-                color: black;
-                margin: 0;
-            }
-            button.clear-input {
-                border: 10px solid black;
-                border-radius: 10px;
-                width: 75px;
-                height: 75px;
-                margin: 5px;
-                font-size: 15px;
-                text-align: center;
-                background-color: #d8d4d3;
-                color: black;
-                margin: 0;
-            }
-            button.toggle-input {
-                border: 10px solid black;
-                border-radius: 10px;
-                width: 75px;
-                height: 75px;
-                margin: 5px;
-                font-size: 15px;
-                text-align: center;
-                background-color: #d8d4d3;
-                color: black;
                 margin: 0;
             }
         </style>
@@ -75,28 +39,25 @@
         <canvas id="colorCanvas" width="400" height="400"></canvas>
         <table>
             <tr>
-                <td><button class="color-input" value="R" style="background-color: #e30929">R</button></td>
-                <td><button class="color-input" value="Y" style="background-color: #ffff05">Y</button></td>
-                <td><button class="color-input" value="G" style="background-color: #07a23a">G</button></td>
+                <td><button class="color-input inputBtn" value="R" style="background-color: #e30929">R</button></td>
+                <td><button class="color-input inputBtn" value="Y" style="background-color: #ffff05">Y</button></td>
+                <td><button class="color-input inputBtn" value="G" style="background-color: #07a23a">G</button></td>
+                <td><button class="color-input inputBtn" value="O" style="background-color: #ef7d05">O</button></td>
+                <td><button class="color-input inputBtn" value="W" style="background-color: #ffffff">W</button></td>
+                <td><button class="color-input inputBtn" value="B" style="background-color: #0354a1">B</button></td>
             </tr>
             <tr>
-                <td><button class="color-input" value="O" style="background-color: #ef7d05">O</button></td>
-                <td><button class="color-input" value="W" style="background-color: #ffffff">W</button></td>
-                <td><button class="color-input" value="B" style="background-color: #0354a1">B</button></td>
-            </tr>
-            <tr>
-                <td><button class="color-input" value="X" style="background-color: #958b87">X</button></td>
-                <td><button class="color-input" value="L" style="background-color: #d8d4d3">L</button></td>
-                <td><button class="color-input" value="K" style="background-color: #000000">K</button></td>
-            </tr>
-            <tr>
-                <td><button class="reset-input" id="resetBtn">RESET</button></td>
-                <td><button class="clear-input" id="clearBtn">DEL</button></td>
-                <td><button class="toggle-input" id="toggleBtn">plus</button></td>
+                <td><button class="color-input inputBtn" value="X" style="background-color: #958b87">X</button></td>
+                <td><button class="color-input inputBtn" value="L" style="background-color: #d8d4d3">L</button></td>
+                <td><button class="color-input inputBtn" value="K" style="background-color: #000000">K</button></td>
+                <td><button class="reset-input inputBtn" id="resetBtn">RES</button></td>
+                <td><button class="clear-input inputBtn" id="clearBtn">DEL</button></td>
+                <td><button class="toggle-input inputBtn" id="toggleBtn">ADD</button></td>
             </tr>
         </table>
-
         <input type="text" id="color-input" value="" maxlength="21" pattern="[ROYWGBXLK]{0,21}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" />
+        <input type="text" id="edge-input" value="" pattern="[0-3]*" oninput="this.value = this.value.replace(/[^0-3]/g, '')" />
+        <input type="text" id="corner-input" value="" pattern="[0-3]*" oninput="this.value = this.value.replace(/[^0-3]/g, '')" />
         <!-- <input type="text" id="addit-input" value="" maxlength="4" pattern="[0-7]{0,4}" /> -->
         <!-- <input type="text" id="aclor-input" value="" maxlength="12" pattern="[ROYWGBXLK]{0,12}" oninput="this.value = this.value.toUpperCase().replace(/[^ROYWGBXLK]/g, '')" /> -->
         <div><br /></div>
@@ -120,6 +81,8 @@
             const colorInput = document.getElementById("color-input");
             const additInput = document.getElementById("addit-input");
             const aClorInput = document.getElementById("aclor-input");
+            const edgeInput = document.getElementById("edge-input");
+            const cornerInput = document.getElementById("corner-input");
 
             const copyBtn = document.getElementById("copy");
 
@@ -133,6 +96,43 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "rgba(255, 255, 255, 50)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const edgeCorr = [
+                [wpadSize + cellSize / 2, hpadSize + cellSize / 2],
+                [wpadSize + (5 * cellSize) / 2, hpadSize + cellSize / 2],
+                [wpadSize + (5 * cellSize) / 2, hpadSize + (5 * cellSize) / 2],
+                [wpadSize + cellSize / 2, hpadSize + (5 * cellSize) / 2],
+            ];
+            const cornerCorr = [
+                [wpadSize + (3 * cellSize) / 2, hpadSize + cellSize / 2],
+                [wpadSize + (5 * cellSize) / 2, hpadSize + (3 * cellSize) / 2],
+                [wpadSize + (3 * cellSize) / 2, hpadSize + (5 * cellSize) / 2],
+                [wpadSize + cellSize / 2, hpadSize + (3 * cellSize) / 2],
+            ];
+            const arrowSize = 10;
+
+            const arrowMap = {
+                "00": [
+                    [0, 0],
+                    [0, 0],
+                    [0, 0],
+                ],
+                "01": [
+                    [arrowSize, 0],
+                    [arrowSize * -Math.sqrt(1 / 2), arrowSize * Math.sqrt(1 / 2)],
+                    [arrowSize * -Math.sqrt(1 / 2), arrowSize * -Math.sqrt(1 / 2)],
+                ],
+                "02": [
+                    [arrowSize, 0],
+                    [arrowSize * Math.sqrt(1 / 2), arrowSize * -Math.sqrt(1 / 2)],
+                    [arrowSize * Math.sqrt(1 / 2), arrowSize * Math.sqrt(1 / 2)],
+                ],
+                "03": [
+                    [arrowSize, 0],
+                    [arrowSize * Math.sqrt(1 / 2), arrowSize * -Math.sqrt(1 / 2)],
+                    [arrowSize * Math.sqrt(1 / 2), arrowSize * Math.sqrt(1 / 2)],
+                ],
+            };
 
             function drawGrid() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -183,6 +183,8 @@
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
                 ctx.lineWidth = 10;
+                ctx.strokeStyle = "#000000";
+                ctx.beginPath();
                 for (let i = 0; i < gridSize; i++) {
                     for (let j = 0; j < gridSize; j++) {
                         ctx.strokeRect(wpadSize + j * cellSize, hpadSize + i * cellSize, cellSize, cellSize);
@@ -196,8 +198,32 @@
                         ctx.strokeRect(wpadSize + i * cellSize, hpadSize + cellSize * gridSize, cellSize, cellSize / 2);
                     }
                 }
+                ctx.closePath();
 
-                // for (let i = 0; i < 4; i++) {
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = "#8427db";
+                for (let i = 0; i < edgeInput.value.length; i += 2) {
+                    if (edgeInput.value.charAt(i) && edgeInput.value.charAt(i + 1)) {
+                        ctx.beginPath();
+                        ctx.moveTo(...edgeCorr[edgeInput.value.charAt(i)]);
+                        ctx.lineTo(...edgeCorr[edgeInput.value.charAt(i + 1)]);
+                        ctx.stroke();
+                        ctx.closePath();
+                        // ctx.beginPath();
+                        // ctx.moveTo(...edgeCorr[edgeInput.value.charAt(i + 1)]);
+                        // ctx.closePath();
+                    }
+                }
+                for (let i = 0; i < cornerInput.value.length; i += 2) {
+                    if (cornerInput.value.charAt(i) && cornerInput.value.charAt(i + 1)) {
+                        ctx.beginPath();
+                        ctx.moveTo(...cornerCorr[cornerInput.value.charAt(i)]);
+                        ctx.lineTo(...cornerCorr[cornerInput.value.charAt(i + 1)]);
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                }
+
                 //     additInput.value
                 //         .charAt(i)
                 //         .toString(2)
@@ -212,6 +238,8 @@
             drawGrid();
 
             colorInput.addEventListener("input", drawGrid);
+            edgeInput.addEventListener("input", drawGrid);
+            cornerInput.addEventListener("input", drawGrid);
 
             async function copyCanvasToClipboard() {
                 try {
