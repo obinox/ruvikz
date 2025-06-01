@@ -1,0 +1,28 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+    max-width: 500px;
+}
+canvas {
+    border: 0px solid black;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+button.inputBtn {
+    border: 10px solid black;
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    font-size: 10px;
+    color: black;
+    text-shadow:
+        -1px -1px 0 white,
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        1px 1px 0 white;
+    margin: 0;
+}
