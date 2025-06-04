@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+    <meta charset="utf-8" />
+    <body>
+        <svg width="90vw" height="90vh" style="border: 1px solid black"></svg>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script>
+            const linki = (src, dst, label) => {
+                return { source: src, target: dst, label: label };
+            };
+            const nodes = [
+                { id: "A", img: "./img/image.png" },
+                { id: "B", img: "./img/image.png" },
+                { id: "C", img: "./img/image.png" },
+            ];
+
+            const links = [linki("A", "B", "a->b"), linki("B", "C", "b->c"), linki("A", "C", "a->c")];
+
+            const width = window.innerWidth * 0.9,
+                height = window.innerHeight * 0.9;
+            const svg = d3.select("svg");
+
+            svg.append("defs").append("marker").attr("id", "arrow").attr("viewBox", "0 -5 10 10").attr("refX", 30).attr("refY", 0).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", "#999");
+
+            const simulation = d3
+                .forceSimulation(nodes)
+                .force(
+                    "link",
+                    d3
+                        .forceLink(links)
+                        .id((d) => d.id)
+                        .distance(200)
+                )
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+
+            const link = svg.append("g").attr("stroke", "#999").attr("stroke-width", 2).selectAll("line").data(links).enter().append("line").attr("marker-end", "url(#arrow)");
+
+            const linkText = svg
+                .append("g")
+                .selectAll("text")
+                .data(links)
+                .enter()
+                .append("text")
+                .text((d) => d.label)
+                .attr("font-size", 14)
+                .attr("fill", "black");
+
+            const node = svg
+                .append("g")
+                .selectAll("image")
+                .data(nodes)
+                .enter()
+                .append("image")
+                .attr("href", (d) => d.img)
+                .attr("width", 50)
+                .attr("height", 50)
+                .attr("x", -25)
+                .attr("y", -25)
+                .call(drag(simulation));
+
+            simulation.on("tick", () => {
+                link.attr("x1", (d) => d.source.x)
+                    .attr("y1", (d) => d.source.y)
+                    .attr("x2", (d) => d.target.x)
+                    .attr("y2", (d) => d.target.y);
+
+                node.attr("x", (d) => d.x - 25).attr("y", (d) => d.y - 25);
+
+                linkText.attr("x", (d) => (d.source.x + d.target.x) / 2).attr("y", (d) => (d.source.y + d.target.y) / 2);
+            });
+
+            function drag(simulation) {
+                return d3
+                    .drag()
+                    .on("start", (event) => {
+                        if (!event.active) simulation.alphaTarget(0.3).restart();
+                        event.subject.fx = event.subject.x;
+                        event.subject.fy = event.subject.y;
+                    })
+                    .on("drag", (event) => {
+                        event.subject.fx = event.x;
+                        event.subject.fy = event.y;
+                    })
+                    .on("end", (event) => {
+                        if (!event.active) simulation.alphaTarget(0);
+                        event.subject.fx = null;
+                        event.subject.fy = null;
+                    });
+            }
+        </script>
+    </body>
+</html>
