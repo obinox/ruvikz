@@ -1,3 +1,9 @@
+const params = new URLSearchParams(window.location.search);
+const colorparam = params.get("color");
+const edgeparam = params.get("edge");
+const cornerparam = params.get("corner");
+const toggleparam = params.get("toggle");
+
 const colorTable = {
     R: "#E30929",
     O: "#EF7D05",
@@ -18,12 +24,31 @@ const cornerInput = document.getElementById("corner-input");
 
 const copyBtn = document.getElementById("copy");
 
+if (colorparam && colorparam !== "") {
+    colorInput.value = colorparam.toUpperCase().replace(/[^ROYWGBXLK]/g, "");
+} else {
+    colorInput.value = "";
+}
+if (edgeparam && edgeparam !== "") {
+    edgeInput.value = edgeparam.toUpperCase().replace(/[^0-9A-F]/g, "");
+} else {
+    edgeInput.value = "";
+}
+if (cornerparam && cornerparam !== "") {
+    cornerInput.value = cornerparam.toUpperCase().replace(/[^0-9A-F]/g, "");
+} else {
+    cornerInput.value = "";
+}
+
 const gridSize = 3;
 const cellSize = 75;
 const wpadSize = (canvas.width - gridSize * cellSize) / 2;
 const hpadSize = (canvas.width - gridSize * cellSize) / 2;
 
 let toggle = false;
+if (toggleparam && toggleparam !== "") {
+    toggle = true;
+}
 
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = "rgba(255, 255, 255, 50)";
