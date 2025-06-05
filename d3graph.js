@@ -61,6 +61,8 @@ const colorTable = {
     U: "#808080",
     U2: "#a0a0a0",
     U3: "#d0d0d0",
+    TU3T: "#ff2fff",
+    TTUTT: "#ff98ff",
 };
 const cT = colorTable;
 
@@ -123,6 +125,7 @@ const links = [
     { source: IN, target: IA, label: "U2(d')", color: cT.U2 },
     { source: IA, target: IN, label: "U2(d)", color: cT.U2 },
 
+    // cross conversion
     { source: TZ, target: TA, label: "U(d2)", color: cT.U },
     { source: TA, target: TV, label: "U(d')", color: cT.U },
     { source: TV, target: TN, label: "U(d2)", color: cT.U },
@@ -137,6 +140,13 @@ const links = [
     { source: TN, target: TA, label: "U2(d')", color: cT.U2 },
 
     { source: TN, target: TO, label: "FUTU'TF'(d2)", color: cT.FUTU3TF3 },
+
+    { source: TI, target: TZ, label: "TU'T(d2)", color: cT.TU3T },
+    { source: TZ, target: TO, label: "TU'T(d)", color: cT.TU3T },
+    { source: TV, target: TO, label: "TTUTT(d2)", color: cT.TTUTT },
+    { source: TA, target: TO, label: "TUTU2T(d2)", color: cT.TTUTT },
+    { source: TA, target: TO, label: "UTTUTT(d)", color: cT.TTUTT },
+    { source: TI, target: TO, label: "TU2TTUT(d2)", color: cT.TTUTT },
 ];
 
 let width = window.innerWidth * 0.9,
