@@ -1,32 +1,6 @@
 const linki = (src, dst, label) => {
     return { source: src, target: dst, label: label };
 };
-const nodes = [
-    { id: "LO", img: "./img/XYXYYXXXXec-ruvikz.png" },
-    { id: "LA", img: "./img/XYXYYXXXXec14-ruvikz.png" },
-    { id: "LI", img: "./img/XYXYYXXXXec28-ruvikz.png" },
-    { id: "LV", img: "./img/XYXYYXXXXec69-ruvikz.png" },
-    { id: "LN", img: "./img/XYXYYXXXXec168-ruvikz.png" },
-    { id: "LZ", img: "./img/XYXYYXXXXec249-ruvikz.png" },
-    { id: "IO", img: "./img/XXXYYYXXXec-ruvikz.png" },
-    { id: "IA", img: "./img/XXXYYYXXXec14-ruvikz.png" },
-    { id: "II", img: "./img/XXXYYYXXXec28-ruvikz.png" },
-    { id: "IV", img: "./img/XXXYYYXXXec69-ruvikz.png" },
-    { id: "IN", img: "./img/XXXYYYXXXec168-ruvikz.png" },
-    { id: "IZ", img: "./img/XXXYYYXXXec249-ruvikz.png" },
-    { id: "TO", img: "./img/XYXYYYXYXec-ruvikz.png" },
-    { id: "TA", img: "./img/XYXYYYXYXec14-ruvikz.png" },
-    { id: "TI", img: "./img/XYXYYYXYXec28-ruvikz.png" },
-    { id: "TV", img: "./img/XYXYYYXYXec69-ruvikz.png" },
-    { id: "TN", img: "./img/XYXYYYXYXec168-ruvikz.png" },
-    { id: "TZ", img: "./img/XYXYYYXYXec249-ruvikz.png" },
-    { id: "OO", img: "./img/XXXXYXXXXec-ruvikz.png" },
-    { id: "OA", img: "./img/XXXXYXXXXec14-ruvikz.png" },
-    { id: "OI", img: "./img/XXXXYXXXXec28-ruvikz.png" },
-    { id: "OV", img: "./img/XXXXYXXXXec69-ruvikz.png" },
-    { id: "ON", img: "./img/XXXXYXXXXec168-ruvikz.png" },
-    { id: "OZ", img: "./img/XXXXYXXXXec249-ruvikz.png" },
-];
 
 const LO = "LO";
 const LA = "LA";
@@ -34,29 +8,57 @@ const LI = "LI";
 const LV = "LV";
 const LN = "LN";
 const LZ = "LZ";
-const IO = "IO";
-const IA = "IA";
-const II = "II";
-const IV = "IV";
-const IN = "IN";
-const IZ = "IZ";
+const BO = "BO";
+const BA = "BA";
+const BI = "BI";
+const BV = "BV";
+const BN = "BN";
+const BZ = "BZ";
 const TO = "TO";
 const TA = "TA";
 const TI = "TI";
 const TV = "TV";
 const TN = "TN";
 const TZ = "TZ";
-const OO = "OO";
-const OA = "OA";
-const OI = "OI";
-const OV = "OV";
-const ON = "ON";
-const OZ = "OZ";
+const DO = "DO";
+const DA = "DA";
+const DI = "DI";
+const DV = "DV";
+const DN = "DN";
+const DZ = "DZ";
+
+const nodes = [
+    { id: LO, img: "./img/XYXYYXXXXec-ruvikz.png" },
+    { id: LA, img: "./img/XYXYYXXXXec14-ruvikz.png" },
+    { id: LI, img: "./img/XYXYYXXXXec28-ruvikz.png" },
+    { id: LV, img: "./img/XYXYYXXXXec69-ruvikz.png" },
+    { id: LN, img: "./img/XYXYYXXXXec168-ruvikz.png" },
+    { id: LZ, img: "./img/XYXYYXXXXec249-ruvikz.png" },
+    { id: BO, img: "./img/XXXYYYXXXec-ruvikz.png" },
+    { id: BA, img: "./img/XXXYYYXXXec14-ruvikz.png" },
+    { id: BI, img: "./img/XXXYYYXXXec28-ruvikz.png" },
+    { id: BV, img: "./img/XXXYYYXXXec69-ruvikz.png" },
+    { id: BN, img: "./img/XXXYYYXXXec168-ruvikz.png" },
+    { id: BZ, img: "./img/XXXYYYXXXec249-ruvikz.png" },
+    { id: TO, img: "./img/XYXYYYXYXec-ruvikz.png" },
+    { id: TA, img: "./img/XYXYYYXYXec14-ruvikz.png" },
+    { id: TI, img: "./img/XYXYYYXYXec28-ruvikz.png" },
+    { id: TV, img: "./img/XYXYYYXYXec69-ruvikz.png" },
+    { id: TN, img: "./img/XYXYYYXYXec168-ruvikz.png" },
+    { id: TZ, img: "./img/XYXYYYXYXec249-ruvikz.png" },
+    { id: DO, img: "./img/XXXXYXXXXec-ruvikz.png" },
+    { id: DA, img: "./img/XXXXYXXXXec14-ruvikz.png" },
+    { id: DI, img: "./img/XXXXYXXXXec28-ruvikz.png" },
+    { id: DV, img: "./img/XXXXYXXXXec69-ruvikz.png" },
+    { id: DN, img: "./img/XXXXYXXXXec168-ruvikz.png" },
+    { id: DZ, img: "./img/XXXXYXXXXec249-ruvikz.png" },
+];
 
 const colorTable = {
     FTF3: "#2f2fff",
     FTTF3: "#9898ff",
     UFTF3U3: "#ff2f2f",
+    U3FTF3U: "#ff9898",
     FUTU3TF3: "#2fff2f",
     U: "#808080",
     U2: "#a0a0a0",
@@ -67,65 +69,77 @@ const colorTable = {
 const cT = colorTable;
 
 const links = [
-    // TO - LN - IZ cycle
+    // TO - LN - BZ cycle
     { source: TO, target: LN, label: "FTF'", color: cT.FTF3 },
-    { source: LN, target: IZ, label: "FTF'", color: cT.FTF3 },
-    { source: IZ, target: TO, label: "FTF'", color: cT.FTF3 },
-    { source: TO, target: IZ, label: "FTTF'", color: cT.FTTF3 },
-    { source: IZ, target: LN, label: "FTTF'", color: cT.FTTF3 },
+    { source: LN, target: BZ, label: "FTF'", color: cT.FTF3 },
+    { source: BZ, target: TO, label: "FTF'", color: cT.FTF3 },
+    { source: TO, target: BZ, label: "FTTF'", color: cT.FTTF3 },
+    { source: BZ, target: LN, label: "FTTF'", color: cT.FTTF3 },
     { source: LN, target: TO, label: "FTTF'", color: cT.FTTF3 },
 
-    // TN - LZ - IO cycle
+    // TN - LZ - BO cycle
     { source: TN, target: LZ, label: "FTF'", color: cT.FTF3 },
-    { source: LZ, target: IO, label: "FTF'", color: cT.FTF3 },
-    { source: IO, target: TN, label: "FTF'", color: cT.FTF3 },
-    { source: TN, target: IO, label: "FTTF'", color: cT.FTTF3 },
-    { source: IO, target: LZ, label: "FTTF'", color: cT.FTTF3 },
+    { source: LZ, target: BO, label: "FTF'", color: cT.FTF3 },
+    { source: BO, target: TN, label: "FTF'", color: cT.FTF3 },
+    { source: TN, target: BO, label: "FTTF'", color: cT.FTTF3 },
+    { source: BO, target: LZ, label: "FTTF'", color: cT.FTTF3 },
     { source: LZ, target: TN, label: "FTTF'", color: cT.FTTF3 },
 
-    // TZ - LO - IN cycle
+    // TZ - LO - BN cycle
     { source: TZ, target: LO, label: "FTF'", color: cT.FTF3 },
-    { source: LO, target: IN, label: "FTF'", color: cT.FTF3 },
-    { source: IN, target: TZ, label: "FTF'", color: cT.FTF3 },
-    { source: TZ, target: IN, label: "FTTF'", color: cT.FTTF3 },
-    { source: IN, target: LO, label: "FTTF'", color: cT.FTTF3 },
+    { source: LO, target: BN, label: "FTF'", color: cT.FTF3 },
+    { source: BN, target: TZ, label: "FTF'", color: cT.FTF3 },
+    { source: TZ, target: BN, label: "FTTF'", color: cT.FTTF3 },
+    { source: BN, target: LO, label: "FTTF'", color: cT.FTTF3 },
     { source: LO, target: TZ, label: "FTTF'", color: cT.FTTF3 },
 
-    // TA - LV - II cycle
+    // TA - LV - BI cycle
     { source: TA, target: LV, label: "FTF'", color: cT.FTF3 },
-    { source: LV, target: II, label: "FTF'", color: cT.FTF3 },
-    { source: II, target: TA, label: "FTF'", color: cT.FTF3 },
-    { source: TA, target: II, label: "FTTF'", color: cT.FTTF3 },
-    { source: II, target: LV, label: "FTTF'", color: cT.FTTF3 },
+    { source: LV, target: BI, label: "FTF'", color: cT.FTF3 },
+    { source: BI, target: TA, label: "FTF'", color: cT.FTF3 },
+    { source: TA, target: BI, label: "FTTF'", color: cT.FTTF3 },
+    { source: BI, target: LV, label: "FTTF'", color: cT.FTTF3 },
     { source: LV, target: TA, label: "FTTF'", color: cT.FTTF3 },
 
-    // TV - LI - IA cycle
+    // TV - LI - BA cycle
     { source: TV, target: LI, label: "FTF'", color: cT.FTF3 },
-    { source: LI, target: IA, label: "FTF'", color: cT.FTF3 },
-    { source: IA, target: TV, label: "FTF'", color: cT.FTF3 },
-    { source: TV, target: IA, label: "FTTF'", color: cT.FTTF3 },
-    { source: IA, target: LI, label: "FTTF'", color: cT.FTTF3 },
+    { source: LI, target: BA, label: "FTF'", color: cT.FTF3 },
+    { source: BA, target: TV, label: "FTF'", color: cT.FTF3 },
+    { source: TV, target: BA, label: "FTTF'", color: cT.FTTF3 },
+    { source: BA, target: LI, label: "FTTF'", color: cT.FTTF3 },
     { source: LI, target: TV, label: "FTTF'", color: cT.FTTF3 },
 
-    // TI - LA - IV cycle
+    // TI - LA - BV cycle
     { source: TI, target: LA, label: "FTF'", color: cT.FTF3 },
-    { source: LA, target: IV, label: "FTF'", color: cT.FTF3 },
-    { source: IV, target: TI, label: "FTF'", color: cT.FTF3 },
-    { source: TI, target: IV, label: "FTTF'", color: cT.FTTF3 },
-    { source: IV, target: LA, label: "FTTF'", color: cT.FTTF3 },
+    { source: LA, target: BV, label: "FTF'", color: cT.FTF3 },
+    { source: BV, target: TI, label: "FTF'", color: cT.FTF3 },
+    { source: TI, target: BV, label: "FTTF'", color: cT.FTTF3 },
+    { source: BV, target: LA, label: "FTTF'", color: cT.FTTF3 },
     { source: LA, target: TI, label: "FTTF'", color: cT.FTTF3 },
 
-    { source: LN, target: LO, label: "UFTF'U'(d2)", color: cT.UFTF3U3 },
+    // UFTF'U' cycle: V -> N -> O / Z -> A -> I
     { source: LO, target: LV, label: "UFTF'U'(d)", color: cT.UFTF3U3 },
     { source: LV, target: LN, label: "UFTF'U'(d)", color: cT.UFTF3U3 },
+    { source: LN, target: LO, label: "UFTF'U'(d2)", color: cT.UFTF3U3 },
+    { source: LI, target: LZ, label: "UFTF'U'(d')", color: cT.UFTF3U3 },
+    { source: LZ, target: LA, label: "UFTF'U'(d')", color: cT.UFTF3U3 },
+    { source: LA, target: LI, label: "UFTF'U'(d2)", color: cT.UFTF3U3 },
 
-    { source: IZ, target: IV, label: "U2(d)", color: cT.U2 },
-    { source: IV, target: IZ, label: "U2(d')", color: cT.U2 },
+    // U'FTF'U cycle: Z -> A -> O / V -> N -> I
+    { source: LO, target: LZ, label: "U'FTF'U(d2)", color: cT.U3FTF3U },
+    { source: LZ, target: LA, label: "U'FTF'U(d)", color: cT.U3FTF3U },
+    { source: LA, target: LO, label: "U'FTF'U(d)", color: cT.U3FTF3U },
+    { source: LI, target: LV, label: "U'FTF'U(d2)", color: cT.U3FTF3U },
+    { source: LV, target: LN, label: "U'FTF'U(d')", color: cT.U3FTF3U },
+    { source: LN, target: LI, label: "U'FTF'U(d')", color: cT.U3FTF3U },
 
-    { source: IN, target: IA, label: "U2(d')", color: cT.U2 },
-    { source: IA, target: IN, label: "U2(d)", color: cT.U2 },
+    // bar rotation: Z <-> V / N <-> A
+    { source: BZ, target: BV, label: "U2(d)", color: cT.U2 },
+    { source: BV, target: BZ, label: "U2(d')", color: cT.U2 },
+    { source: BN, target: BA, label: "U2(d')", color: cT.U2 },
+    { source: BA, target: BN, label: "U2(d)", color: cT.U2 },
 
-    // cross conversion
+    // cross rotation: Z -> A -> V -> N (CW) / Z -> N -> V -> A (CCW)
     { source: TZ, target: TA, label: "U(d2)", color: cT.U },
     { source: TA, target: TV, label: "U(d')", color: cT.U },
     { source: TV, target: TN, label: "U(d2)", color: cT.U },
@@ -139,13 +153,42 @@ const links = [
     { source: TA, target: TN, label: "U2(d)", color: cT.U2 },
     { source: TN, target: TA, label: "U2(d')", color: cT.U2 },
 
-    { source: TN, target: TO, label: "FUTU'TF'(d2)", color: cT.FUTU3TF3 },
+    // dot rotation: Z -> A -> V -> N (CW) / Z -> N -> V -> A (CCW)
+    { source: DZ, target: DA, label: "U(d2)", color: cT.U },
+    { source: DA, target: DV, label: "U(d')", color: cT.U },
+    { source: DV, target: DN, label: "U(d2)", color: cT.U },
+    { source: DN, target: DZ, label: "U(d)", color: cT.U },
+    { source: DZ, target: DN, label: "U'(d')", color: cT.U3 },
+    { source: DN, target: DV, label: "U'(d2)", color: cT.U3 },
+    { source: DV, target: DA, label: "U'(d)", color: cT.U3 },
+    { source: DA, target: DZ, label: "U'(d2)", color: cT.U3 },
+    { source: DZ, target: DV, label: "U2(d)", color: cT.U2 },
+    { source: DV, target: DZ, label: "U2(d')", color: cT.U2 },
+    { source: DA, target: DN, label: "U2(d)", color: cT.U2 },
+    { source: DN, target: DA, label: "U2(d')", color: cT.U2 },
 
+    // FUTU'TF' cycle: V -> N -> O / Z -> A -> I
+    { source: TV, target: TN, label: "FUTU'TF'(d)", color: cT.FUTU3TF3 },
+    { source: TN, target: TO, label: "FUTU'TF'(d2)", color: cT.FUTU3TF3 },
+    { source: TO, target: TV, label: "FUTU'TF'(d)", color: cT.FUTU3TF3 },
+    { source: TZ, target: TA, label: "FUTU'TF'(d')", color: cT.FUTU3TF3 },
+    { source: TA, target: TI, label: "FUTU'TF'(d2)", color: cT.FUTU3TF3 },
+    { source: TI, target: TZ, label: "FUTU'TF'(d')", color: cT.FUTU3TF3 },
+
+    // TU'T cycle: V -> I -> Z -> O / A -> A / N -> N
+    { source: TO, target: TV, label: "TU'T(d2)", color: cT.TU3T },
+    { source: TV, target: TI, label: "TU'T(d')", color: cT.TU3T },
     { source: TI, target: TZ, label: "TU'T(d2)", color: cT.TU3T },
     { source: TZ, target: TO, label: "TU'T(d)", color: cT.TU3T },
+
+    // TTUTT cycle: Z -> I -> V -> O / A -> A / N -> N
+    { source: TO, target: TZ, label: "TTUTT(d2)", color: cT.TTUTT },
+    { source: TZ, target: TI, label: "TTUTT(d2)", color: cT.TTUTT },
+    { source: TI, target: TV, label: "TTUTT(d2)", color: cT.TTUTT },
     { source: TV, target: TO, label: "TTUTT(d2)", color: cT.TTUTT },
+
+    // other method
     { source: TA, target: TO, label: "TUTU2T(d2)", color: cT.TTUTT },
-    { source: TA, target: TO, label: "UTTUTT(d)", color: cT.TTUTT },
     { source: TI, target: TO, label: "TU2TTUT(d2)", color: cT.TTUTT },
 ];
 
